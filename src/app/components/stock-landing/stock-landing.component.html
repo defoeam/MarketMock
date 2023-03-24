@@ -1,0 +1,17 @@
+
+<body>
+    <div>
+        <ng-container *ngIf="stockData">
+            <app-stock-graph [dataSets]="stockData"></app-stock-graph>
+            <p class="text-white">{{currentPrice}}</p>
+        </ng-container>
+        <div class="fixed top-[70%] left-1/2 z-10">
+            <h1 class="text-white h-max relative mb-3 flex">Search for Stock</h1>
+            <input class="flex w-98 rounded-md h-7" [value]="searchText" type="text" name="search" id="searchIn">
+            <button class="text-white" (click)="onSubmit()">Submit</button>
+            <p class="text-white">you typed: {{searchText}}</p>
+            
+        </div>
+        
+    </div>
+</body>
