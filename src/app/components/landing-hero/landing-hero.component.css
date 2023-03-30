@@ -1,13 +1,14 @@
 .hero{
-   
-}
+   background-image: url("../../../assets/hero.jpg");
+   background-size:cover ;
+}   
 
 .card{
    position: relative;
    top: 35%;
     left:70% ;
     color: whitesmoke;
-    background-image: url("/assets/hero.jpg");
+    background-image: url("/assets/image.jpg");
     background-size: cover;
     padding:1rem 0 0;
     max-width: 45ch;
@@ -18,7 +19,8 @@
     transition:transform 500ms ease;
     margin-top: 25px;
     box-shadow: 5px 5px 5px black;
-    
+    animation:slideImg 720s infinite;    
+    animation-timing-function: linear;
 }
 
 
@@ -85,3 +87,14 @@
     border-radius: 1rem;
     
 }
+@keyframes slideImg {
+  
+    0% {
+      background-position: 0 0;
+    }
+   
+    100% {
+      background-position: 751% 0;
+    }
+  
+  }

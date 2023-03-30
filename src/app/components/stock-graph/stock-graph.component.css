@@ -1,0 +1,83 @@
+#LineChart {
+    height: 100%; 
+    width: 100%;
+    
+  }
+
+
+.card{
+    position: fixed;
+    top: 20%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+    color: whitesmoke;
+    background-color: white;
+    background-size: cover;
+    padding: 1rem 0;
+    min-width: 35ch;
+    max-width: 90ch;
+    max-height: 90ch;
+    width: 40%;
+    height: 40%;
+   
+    border-radius: 0.5rem;
+    transition: transform 500ms ease, height 500ms ease;
+    margin-top: 25px;
+    box-shadow: 5px 5px 5px black;
+}
+
+.card:hover{
+    transform: scale(1.05) translate(-50%, -50%);
+}
+
+.card-content{
+    opacity: 0;
+    max-height: 50%;
+    width: 100%;
+    position: relative;
+    padding: 1.5rem;
+    background: linear-gradient(
+        hsla(0, 100%, 100%, 0),
+        hsl(0 0% 0% / 0.4) 20%,
+        hsl(0 0% 0% / 0.2)
+    );
+    transform: translateY(90%);
+    transition: transform 500ms ease, opacity 900ms ease;
+}
+
+.card:hover .card-content{
+    opacity: 1;
+    transform: translateY(0%);
+    transition-delay: 500ms;
+    transition: transform 500ms ease-in-out, opacity 900ms ease-in-out;
+}
+
+.card-body{
+    padding: 10px 1.5rem 20px;
+    color: rgba(255, 255, 255, .82);
+    transition: opacity 500ms ease;
+}
+
+.title{
+    position: relative;
+    max-width: 100%;
+    width: max-content;
+    font-size: 27px;
+}
+
+.title::after{
+    content: "";
+    position: absolute;
+    height: 4px;
+    width: calc(100% + 1.5rem);
+    left: -1.5rem;
+    bottom: 0;
+    background: hsl(0, 4%, 86%);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 500ms ease;
+}
+
+.card:hover .title::after{
+    transform: scaleX(1);
+}

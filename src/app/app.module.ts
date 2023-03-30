@@ -8,6 +8,8 @@ import { LandingHeroComponent } from './components/landing-hero/landing-hero.com
 import { StockLandingComponent } from './components/stock-landing/stock-landing.component';
 import { StockGraphComponent } from './components/stock-graph/stock-graph.component';
 import { NgChartsModule } from 'ng2-charts';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +22,8 @@ import { NgChartsModule } from 'ng2-charts';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    NgChartsModule
+    NgChartsModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

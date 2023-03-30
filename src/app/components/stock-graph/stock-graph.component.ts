@@ -1,4 +1,4 @@
-import { Component,Input } from '@angular/core';
+import { Component,Input, ElementRef,SimpleChanges } from '@angular/core';
 import Chart from 'chart.js/auto'
 
 @Component({
@@ -7,13 +7,29 @@ import Chart from 'chart.js/auto'
   styleUrls: ['./stock-graph.component.css']
 })
 export class StockGraphComponent {
-  @Input() dataSets: any;
-  
-  public chart: any
-
-  ngOnInit(): void{
-    this.createChart()
+  @Input() dataSets: any
+  @Input() aiText:string ="";  // input data for the chart
+  public chart: any = null // reference to the chart object
+  useAiText:string = ""
+  ngOnChanges(changes: SimpleChanges): void { 
+    this.createChart();
+    this.resizeChart()
   }
+ 
+
+resizeChart() {
+  const canvas = document.getElementById('LineChart') as HTMLCanvasElement;
+  if (canvas) {
+    const parent = canvas.parentElement;
+    if (parent) {
+      const rect = parent.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+      this.chart.resize();
+    }
+  }
+}
+
   createChart() {
    if (!this.dataSets) return; // wait for dataSets to be available
     // update chart with new labels and data
@@ -21,46 +37,49 @@ export class StockGraphComponent {
       this.chart.data.datasets[0].data = this.dataSets;
       this.chart.update();
     }
-    
+    //to do make labels dynamic
     else{
     this.chart = new Chart('LineChart', {
       type: 'line',
       data: {
-        labels: ['2022-05-10', '2022-05-11', '2022-05-12','2022-05-13',
-        '2022-05-14', '2022-05-15', '2022-05-16','2022-05-17', ],
+        labels: Array.from(Array(this.dataSets.length).keys()),
         datasets: [{
           label: 'Stock Data',
           data: this.dataSets,
-          borderColor: 'blue',
+          borderColor: 'white',
           fill: false
         }]
       },
       options: {
         aspectRatio: 1.5,
         responsive: true,
+        maintainAspectRatio: true,
         plugins: {
-            title: {
-                display: true,
-                text: "Stock"
-            }
+           
         },
         scales: {
-            x: {
-                display: true
-            },
-            y: {
-                display: true
+          x: {
+            display: true, 
+            ticks:{
+              color:'white'
             }
+          },
+          y: {
+            display: true,
+            ticks:{
+              color:'white'
+            }
+          }
         }
       }
     });
   }
   }
   
-  removeChart(data:any[]){
+  removeChart(newData:any[]){
 
      this.chart.data.datasets.forEach((dataset:any)=>{
-      dataset.data =data;
+      dataset.data =newData;
      });
      this.chart.update();
   }

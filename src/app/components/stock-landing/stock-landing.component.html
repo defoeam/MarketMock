@@ -1,17 +1,33 @@
 
-<body>
-    <div>
+
+
+
+
+<body class="overflow-hidden">
+    <div class="grid-container">
         <ng-container *ngIf="stockData">
-            <app-stock-graph [dataSets]="stockData"></app-stock-graph>
-            <p class="text-white">{{currentPrice}}</p>
-        </ng-container>
-        <div class="fixed top-[70%] left-1/2 z-10">
-            <h1 class="text-white h-max relative mb-3 flex">Search for Stock</h1>
-            <input class="flex w-98 rounded-md h-7" [value]="searchText" type="text" name="search" id="searchIn">
-            <button class="text-white" (click)="onSubmit()">Submit</button>
-            <p class="text-white">you typed: {{searchText}}</p>
             
-        </div>
+                <div class="chart-container">
+                    <app-stock-graph class="w-full h-full" [dataSets]="stockData" [aiText]="aiText"></app-stock-graph>
+                    <p class="text-white  relative left-3/4 bottom-[-50%]" >Current: {{currentPrice}}</p>
+                </div>
+                <div class="chatbot-container">
+                    <div class="chatBot fixed top-[12%] p-5 bg-emerald-600 bg-opacity-95 rounded-lg w-1/4 h-[30rem] text-white ml-5">
+                        <h1 class="flex justify-center text-lg font-bold">ChatGPT: {{searchText}}</h1>
+                        <p>{{aiText}}</p>
+                    </div>
+                </div>
+        </ng-container>
+        <div class="search-container">
+            <div class="search-content fixed top-[70%] left-1/2 z-10">
+                <h1 class="text-white h-max text-xl relative mb-3 flex left-[-22%]">Search for Stock By Ticker</h1>
+                <input class="flex w-[15em] indent-1 relative left-[-25%] rounded-md h-8" [value]="searchText" type="text" name="search" id="searchIn">
+                <button class="text-white bg-sky-600 relative left-[-10%] p-3 mt-3 rounded-xl shadow-md shadow-black hover:shadow-none hover:bg-sky-900" (click)="onSubmit()">Submit</button>
+                <button class="text-white bg-sky-600 relative left-[-8%] p-3 mt-3 ml-6 rounded-xl shadow-md shadow-black hover:shadow-none hover:bg-sky-900" (click)="onSubmit()">Add To</button>
+            </div>
+            <!-- Search bar and buttons here -->
+          </div>
         
     </div>
 </body>
+
