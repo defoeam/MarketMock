@@ -9,6 +9,7 @@ import { StockLandingComponent } from './components/stock-landing/stock-landing.
 import { StockGraphComponent } from './components/stock-graph/stock-graph.component';
 import { NgChartsModule } from 'ng2-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PortoflioLandingComponent } from './components/portoflio-landing/portoflio-landing.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NavBarComponent,
     LandingHeroComponent,
     StockLandingComponent,
-    StockGraphComponent
+    StockGraphComponent,
+    PortoflioLandingComponent
   ],
   imports: [
     BrowserModule,
