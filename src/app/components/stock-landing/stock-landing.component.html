@@ -3,6 +3,7 @@
 
 
 <body class="overflow-hidden">
+    <a  routerLink="/portfolio-landing" routerLinkActive="active" ariaCurrentWhenActive="page" class="h-max w-max p-3 rounded-md fixed right-11 z-10 bg-white">Portfolio</a>
     <div class="grid-container">
         <ng-container *ngIf="stockData">
             
@@ -10,10 +11,10 @@
                     <app-stock-graph class="w-full h-full" [dataSets]="stockData" [aiText]="aiText"></app-stock-graph>
                 </div>
                 <div class="chart-info">
-                    <p class="text-white  relative left-3/4 bottom-[-50%]" >Current: {{currentPrice}}</p>
+                    <p class="text-white relative left-11 bottom-[-10em]" >Current: {{currentPrice}}</p>
                 </div>
                 <div class="chatbot-container">
-                    <div class="chatBot fixed top-[12%] p-5 bg-emerald-600 bg-opacity-95 rounded-lg w-1/4 h-[30rem] text-white ml-5">
+                    <div class="chatBot fixed top-[12%] p-5 bg-emerald-600 bg-opacity-95 rounded-lg w-1/4 h-max text-white ml-5">
                         <h1 class="flex justify-center text-lg font-bold">ChatGPT: {{searchText}}</h1>
                         <p>{{aiText}}</p>
                     </div>

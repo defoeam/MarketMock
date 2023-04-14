@@ -31,7 +31,7 @@ export class StockLandingComponent {
   stockData: any;
   currentPrice:Number = 0;
   APIKEY = 'puJTCSJIJ8hyAoTVJFnOGuDQiJTsnhDL'; //put in .env for release
-  ChatAPI = "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";
+  ChatAPI = "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"; //CORRUPT API NEED NEW ONE
 
 
 async getStock(text:string) {
