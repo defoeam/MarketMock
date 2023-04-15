@@ -25,7 +25,8 @@ import { PortoflioLandingComponent } from './components/portoflio-landing/portof
     AppRoutingModule,
     FormsModule,
     NgChartsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
