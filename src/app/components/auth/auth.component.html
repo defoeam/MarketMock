@@ -1,0 +1,10 @@
+<ng-container *ngIf="auth.isAuthenticated$ | async; else loggedOut">
+    <button class="bg-blue-700 p-2 ml-2 text-white rounded-md hover:bg-blue-900" (click)="auth.logout({ logoutParams: { returnTo: 'http://localhost:4200' } })">
+      Log out
+    </button>
+  </ng-container>
+<ng-template #loggedOut>
+    <button class="bg-blue-700 p-2 ml-2 text-white rounded-md hover:bg-blue-900" (click)="auth.loginWithRedirect({ 
+        appState: { target: '/stock-landing' }
+      })">Log in</button>
+</ng-template>
