@@ -4,7 +4,12 @@
 
 <body class="overflow-hidden">
     <a  routerLink="/portfolio-landing" routerLinkActive="active" ariaCurrentWhenActive="page" class="h-max w-max p-3 rounded-md fixed right-11 z-10 bg-white">Portfolio</a>
+    <ul class="fixed left-[40%]" *ngIf="auth.user$ | async as user">
+        <li class="flex font-bold text-2xl text-white"> Welcome Back  <p class="ml-2 font-normal">{{user.name }}</p></li>
+      </ul>`
+      <app-auth></app-auth>
     <div class="grid-container">
+       
         <ng-container *ngIf="stockData">
             
                 <div class="chart-container">
@@ -19,6 +24,7 @@
                         <p>{{aiText}}</p>
                     </div>
                 </div>
+               
         </ng-container>
         <div class="search-container">
             <div class="search-content fixed top-[70%] left-1/2 z-10">

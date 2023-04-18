@@ -2,7 +2,8 @@
 import { Component,HostBinding,OnInit,ViewChild } from '@angular/core';
 import { StockGraphComponent } from '../stock-graph/stock-graph.component';
 import { trigger, transition, style, animate,query,stagger } from '@angular/animations';
-
+import { AuthService } from '@auth0/auth0-angular';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-stock-landing',
   templateUrl: './stock-landing.component.html',
@@ -32,7 +33,17 @@ export class StockLandingComponent {
   currentPrice:Number = 0;
   APIKEY = 'puJTCSJIJ8hyAoTVJFnOGuDQiJTsnhDL'; //put in .env for release
   ChatAPI = "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"; //CORRUPT API NEED NEW ONE
-
+  constructor(public auth: AuthService, private router: Router) {}
+  ngOnInit(): void {
+    // Call the authentication service to handle the callback and redirect
+    this.auth.handleRedirectCallback().subscribe(() => {
+      // Redirect to desired page after successful authentication
+      // For example, you can use Angular Router to navigate to a specific page
+      // or update the UI based on the authentication result
+      // For example:
+      this.router.navigate(['/stock-landing']); 
+    });
+  }
 
 async getStock(text:string) {
     //get current date

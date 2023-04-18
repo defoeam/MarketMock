@@ -1,11 +1,12 @@
 .hero{
-   background-image: url("../../../assets/hero.jpg");
+   background-image: url("../../../assets/3d-abstract-wave-pattern-background.jpg");
    background-size:cover ;
 }   
 
+ 
 .card{
    position: relative;
-   top: 35%;
+   top: 28%;
     left:70% ;
     color: whitesmoke;
     background-image: url("/assets/image.jpg");
@@ -97,4 +98,17 @@
       background-position: 751% 0;
     }
   
+  }
+
+  @media (max-width:1400px) {
+    .card{
+      visibility: hidden;
+    }
+
+  }
+  @media (min-width:600px) {
+    .greeting{
+        position: relative;
+        left:-10%;
+    }
   }
