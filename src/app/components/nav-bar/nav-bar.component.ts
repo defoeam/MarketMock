@@ -7,5 +7,4 @@ import { AuthService } from '@auth0/auth0-angular';
 })
 export class NavBarComponent {
   constructor(public auth: AuthService) {}
-
 }

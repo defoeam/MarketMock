@@ -10,7 +10,10 @@ import { StockGraphComponent } from './components/stock-graph/stock-graph.compon
 import { NgChartsModule } from 'ng2-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PortoflioLandingComponent } from './components/portoflio-landing/portoflio-landing.component';
-
+// Import the module from the SDK
+import { AuthModule } from '@auth0/auth0-angular';
+import { AuthComponent } from './components/auth/auth.component';
+import { environment } from 'src/environments/environment';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +21,8 @@ import { PortoflioLandingComponent } from './components/portoflio-landing/portof
     LandingHeroComponent,
     StockLandingComponent,
     StockGraphComponent,
-    PortoflioLandingComponent
+    PortoflioLandingComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
@@ -26,6 +30,14 @@ import { PortoflioLandingComponent } from './components/portoflio-landing/portof
     FormsModule,
     NgChartsModule,
     BrowserAnimationsModule,
+     // Import the module into the application, with configuration
+     AuthModule.forRoot({
+      domain: environment.domain,
+      clientId: environment.clientId,
+      authorizationParams: {
+        redirect_uri: 'http://localhost:4200/stock-landing'
+      }
+    }),
 
   ],
   providers: [],
