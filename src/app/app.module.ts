@@ -14,6 +14,7 @@ import { PortoflioLandingComponent } from './components/portoflio-landing/portof
 import { AuthModule } from '@auth0/auth0-angular';
 import { AuthComponent } from './components/auth/auth.component';
 import { environment } from 'src/environments/environment';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,10 +31,11 @@ import { environment } from 'src/environments/environment';
     FormsModule,
     NgChartsModule,
     BrowserAnimationsModule,
+    HttpClientModule,
      // Import the module into the application, with configuration
      AuthModule.forRoot({
       domain: environment.domain,
-      clientId: environment.clientId,
+      clientId:  environment.clientId,
       authorizationParams: {
         redirect_uri: 'http://localhost:4200/stock-landing'
       }
