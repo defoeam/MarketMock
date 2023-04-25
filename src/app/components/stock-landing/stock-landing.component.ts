@@ -1,9 +1,10 @@
 
-import { Component,HostBinding,OnInit,ViewChild } from '@angular/core';
+import { Component,HostBinding,OnInit,ViewChild,OnChanges } from '@angular/core';
 import { StockGraphComponent } from '../stock-graph/stock-graph.component';
 import { trigger, transition, style, animate,query,stagger } from '@angular/animations';
 import { AuthService } from '@auth0/auth0-angular';
 import { Router } from '@angular/router';
+import { StockLandingService } from 'src/app/Service/stock-landing.service';
 @Component({
   selector: 'app-stock-landing',
   templateUrl: './stock-landing.component.html',
@@ -30,11 +31,12 @@ export class StockLandingComponent {
   aiText:string = '';
   searchText: string ='';
   stockData: any;
+  userInfo: any;
   currentPrice:Number = 0;
   APIKEY = 'puJTCSJIJ8hyAoTVJFnOGuDQiJTsnhDL'; //put in .env for release
   ChatAPI = "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"; //CORRUPT API NEED NEW ONE
-  constructor(public auth: AuthService, private router: Router) {}
-  ngOnInit(): void {
+  constructor(public auth: AuthService,public landService: StockLandingService ,private router: Router) {}
+   async ngOnInit(){
     // Call the authentication service to handle the callback and redirect
     this.auth.handleRedirectCallback().subscribe(() => {
       // Redirect to desired page after successful authentication
@@ -43,7 +45,14 @@ export class StockLandingComponent {
       // For example:
       this.router.navigate(['/stock-landing']); 
     });
+
+    this.landService.getUsers().subscribe(data => {
+      this.userInfo = data;
+      console.log(data); // For debugging purposes only
+    });
+  
   }
+
 
 async getStock(text:string) {
     //get current date
@@ -121,4 +130,21 @@ async getAiText(){
       console.log(this.stockData + " " + this.currentPrice); // debug output
     });
   }
+
+  //CHANGE: just for debug
+  async getUserFromDataBase() : Promise<any>{
+    try{
+    const response =await fetch('http://127.0.0.1:8000/users/');
+    const user = await response.json();
+    
+    console.log(user);
+    return user;
+    }
+    catch(error){
+      console.log(error)
+    }
+  }
+
+
+
 }
