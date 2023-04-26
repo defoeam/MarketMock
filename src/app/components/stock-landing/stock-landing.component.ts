@@ -32,6 +32,7 @@ export class StockLandingComponent {
   searchText: string ='';
   stockData: any;
   userInfo: any;
+  text:string | undefined = '';
   currentPrice:Number = 0;
   APIKEY = 'puJTCSJIJ8hyAoTVJFnOGuDQiJTsnhDL'; //put in .env for release
   ChatAPI = "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"; //CORRUPT API NEED NEW ONE
@@ -46,10 +47,15 @@ export class StockLandingComponent {
       this.router.navigate(['/stock-landing']); 
     });
 
-    this.landService.getUsers().subscribe(data => {
-      this.userInfo = data;
-      console.log(data); // For debugging purposes only
-    });
+    this.auth.user$.subscribe(user=>{
+      if(user){
+        this.text = user.name;
+        this.landService.postUser(user.email)?.subscribe(
+          response => console.log(response),
+          error => console.log(error)
+        )
+        }  
+    })
   
   }
 
