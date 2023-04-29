@@ -1,6 +1,6 @@
 import { Stock } from "./Stocks"
 
-export interface User{
+export interface Users{
     userId:number,
     money_current:number,
     stock:Stock[]

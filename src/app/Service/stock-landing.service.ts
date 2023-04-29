@@ -8,10 +8,16 @@ import { Stock } from '../Stocks';
 export class StockLandingService {
 
   constructor(public http:HttpClient) { }
-
+  //get all
   getUsers() {
     return this.http.get('http://127.0.0.1:8000/users/');
   }
+
+  //by email
+  getUser(name:string | undefined):Observable<any>{
+    return this.http.get(`http://127.0.0.1:8000/user/${name}`);
+  }
+
   getStock() {
     return this.http.get('http://127.0.0.1:8000/stocks/');
   }
@@ -22,4 +28,16 @@ export class StockLandingService {
     return this.http.post('http://127.0.0.1:8000/postUser/',data);
   }
 
+  postStock(ticker:string, shares:number, userId:number):Observable<any>{
+      const Stock={StockTicker:ticker, shares:shares}
+      return this.http.post(`http://127.0.0.1:8000/postStock/${userId}/`,Stock)
+  }
+  buyShares(userId:number,stockId:number,sharesToAdd:number){
+   //http update
+  }
+  sellShares(userId:number,stockId:number,sharesToSell:number){
+    //for Buying
+       const stockShares={shares:sharesToSell}
+       return this.http.post(`http://127.0.0.1:8000/sellUserStock/${userId}/${stockId}`,stockShares)
+   }
 }

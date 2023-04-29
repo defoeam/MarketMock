@@ -3,15 +3,10 @@
 
 
 <body class="overflow-hidden">
-    <a  routerLink="/portfolio-landing" routerLinkActive="active" ariaCurrentWhenActive="page" class="h-max w-max p-3 rounded-md fixed right-11 z-10 bg-white">Portfolio</a>
+    <a  routerLink="/portfolio-landing" [queryParams]="{ userId: currentUserId }" routerLinkActive="active" ariaCurrentWhenActive="page" class="h-max w-max p-3 rounded-md fixed right-11 z-10 bg-white">Portfolio</a>
     <ul class="fixed left-[40%]" *ngIf="auth.user$ | async as user">
         <li class="flex font-bold text-2xl text-white"> Welcome Back  <p class="ml-2 font-normal">{{user.email }}</p></li>
-        <li *ngIf="userInfo">
-            <div *ngFor="let info of userInfo">
-                <p>{{info['userId']}}</p>
-            </div>
-        </li>
-    </ul>`
+    </ul>
       <app-auth></app-auth>
     <div class="grid-container">
        
@@ -21,7 +16,7 @@
                     <app-stock-graph class="w-full h-full" [dataSets]="stockData" [aiText]="aiText"></app-stock-graph>
                 </div>
                 <div class="chart-info">
-                    <p class="text-white relative left-11 bottom-[-10em]" >Current: {{currentPrice}}</p>
+                    <p class="text-white relative left-11 bottom-[-10em]" >Current: {{currentStockPrice}}</p>
                 </div>
                 <div class="chatbot-container">
                     <div class="chatBot fixed top-[12%] p-5 bg-emerald-600 bg-opacity-95 rounded-lg w-1/4 h-max text-white ml-5">
@@ -35,19 +30,16 @@
         <div class="search-container search-content fixed top-[80%] left-[45%] z-10">
             <h1 class="text-white text-xl mb-3 absolute left-[-60%]">Search for Stock By Ticker</h1>
             <div class="flex">
-              <input class="w-[15em] h-8 rounded-md indent-1 mr-2" [value]="searchText" type="text" name="search" id="searchIn">
+              <input class="w-[15em] h-8 rounded-md indent-1 mr-2" [(ngModel)]="searchText" type="text" name="search" id="searchIn">
               <button class="text-white bg-sky-600 pl-3 pr-3 rounded-xl shadow-md shadow-black hover:shadow-none hover:bg-sky-900 mr-2" (click)="onSubmit()">Graph</button>
-              <button class="text-white bg-sky-600 pl-3 pr-3 rounded-xl shadow-md shadow-black hover:shadow-none hover:bg-sky-900" (click)="onSubmit()">Add To</button>
+              <button class="text-white bg-sky-600 pl-3 pr-3 rounded-xl shadow-md shadow-black hover:shadow-none hover:bg-sky-900" (click)="addToPortfolio()">Add To</button>
             </div>
             <div class="buy-sell-container mt-3">
               <div class="flex">
                 <h1 class="mr-2 text-lg text-white">Buy</h1>
-                <input class="h-8" type="text" name="buy" id="buy">
+                <input class="h-8" type="text" [(ngModel)]="buyAmount" name="buy" id="buy">
               </div>
-              <div class="flex mt-2">
-                <h1 class="mr-2  text-lg text-white">Sell</h1>
-                <input class="h-8" type="text" name="sell" id="sell">
-              </div>
+             
             </div>
           </div>
           

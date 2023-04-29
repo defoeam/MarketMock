@@ -1,4 +1,4 @@
-
+import { Users } from 'src/app/User';
 import { Component,HostBinding,OnInit,ViewChild,OnChanges } from '@angular/core';
 import { StockGraphComponent } from '../stock-graph/stock-graph.component';
 import { trigger, transition, style, animate,query,stagger } from '@angular/animations';
@@ -33,20 +33,30 @@ export class StockLandingComponent {
   stockData: any;
   userInfo: any;
   text:string | undefined = '';
-  currentPrice:Number = 0;
+  buyAmount:string = "";
+  currentStockPrice:Number = 0;
+  currentUserId = 0;
+  currentStockId=0;
   APIKEY = 'puJTCSJIJ8hyAoTVJFnOGuDQiJTsnhDL'; //put in .env for release
   ChatAPI = "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"; //CORRUPT API NEED NEW ONE
   constructor(public auth: AuthService,public landService: StockLandingService ,private router: Router) {}
    async ngOnInit(){
-    // Call the authentication service to handle the callback and redirect
     this.auth.handleRedirectCallback().subscribe(() => {
-      // Redirect to desired page after successful authentication
-      // For example, you can use Angular Router to navigate to a specific page
-      // or update the UI based on the authentication result
-      // For example:
       this.router.navigate(['/stock-landing']); 
     });
 
+    this.postUserToDb();
+    this.setUserId();
+  }
+
+setUserId(){
+  this.auth.user$.subscribe(data=>{
+    this.landService.getUser(data?.email).subscribe(response=>{
+      this.currentUserId = response['userId'];
+    })
+    })
+}
+  postUserToDb(){
     this.auth.user$.subscribe(user=>{
       if(user){
         this.text = user.name;
@@ -59,20 +69,19 @@ export class StockLandingComponent {
   
   }
 
-
-async getStock(text:string) {
+  async getStock(text:string) {
     //get current date
     text = text.toUpperCase();
     const currentDate = new Date();
-    const year = currentDate.getFullYear();
-    const month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
-    const day = ('0' + currentDate.getDate()).slice(-2);
-    const formattedDate = `${year}-${month}-${day}`;
-    //get old date
-    const oneWeekAgo = new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000);
-    const monthLater = ('0' + (oneWeekAgo.getMonth() + 1)).slice(-2);
-    const dayLater = ('0' + oneWeekAgo.getDate()).slice(-2);
-    const formattedDateLater = `${year}-${monthLater}-${dayLater}`;
+      const year = currentDate.getFullYear();
+      const month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
+      const day = ('0' + currentDate.getDate()).slice(-2);
+      const formattedDate = `${year}-${month}-${day}`;
+      //get old date (week)
+      const oneWeekAgo = new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000);
+      const monthLater = ('0' + (oneWeekAgo.getMonth() + 1)).slice(-2);
+      const dayLater = ('0' + oneWeekAgo.getDate()).slice(-2);
+      const formattedDateLater = `${year}-${monthLater}-${dayLater}`;
     try{
       const response = await fetch(`https://api.polygon.io/v2/aggs/ticker/${text}/range/1/day/${formattedDateLater}/${formattedDate}?adjusted=true&sort=asc&limit=120&apiKey=${this.APIKEY}`);
         const data =await response.json();
@@ -102,11 +111,30 @@ async getAiText(){
           return(String(data.choices[0].text));
       } catch (error) {
           console.log(error);
-          return "bad shit";
+          return "Uh oh";
       }
   }
   
-   
+  addToPortfolio() {
+    //need input to buy
+    if (this.buyAmount != "")
+    //if the user is authenticated
+    this.auth.user$.subscribe(user => {
+      //postStock with user provided info
+        this.landService.postStock(this.searchText, Number.parseInt(this.buyAmount),this.currentUserId,).subscribe(data => {
+          console.log(data);
+          //set stock id
+          this.currentStockId = data['stockId'];
+        });
+      });
+    
+  }
+
+  buyShares(){
+      
+      }
+  
+
 
   onSubmit() {
     const input = document.querySelector('input');
@@ -128,12 +156,12 @@ async getAiText(){
     })
 
       this.stockData = newData;
-      this.currentPrice = this.stockData[this.stockData.length-1]; //
+      this.currentStockPrice = this.stockData[this.stockData.length-1]; //
       //Check if chart is initialized first to avoid future errors
       
       this.stockGraphComponent.removeChart(this.stockData);
       
-      console.log(this.stockData + " " + this.currentPrice); // debug output
+      console.log(this.stockData + " " + this.currentStockPrice); // debug output
     });
   }
 
