@@ -1,0 +1,9 @@
+.about-main{
+    background-image: url("../../../assets/SpaceHero.jpg");
+   background-size:cover ;
+}
+
+img{
+    max-width: 350px;
+    max-height: 350px;
+}
