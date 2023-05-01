@@ -9,9 +9,9 @@ export class PortfolioService {
 
   constructor(public http:HttpClient) { }
 
-  getAllStocks():Observable<any>{
+  getAllStocks(userId:string):Observable<any>{
     //get stocks for a user
-    return this.http.get("balls")
+    return this.http.get(`http://127.0.0.1:8000/users/${userId}`)
   }
 
 }

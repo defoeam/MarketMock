@@ -1,4 +1,4 @@
-<app-navbar></app-navbar>
+<app-navbar [userId]="this.currentUserId"></app-navbar>
 <body class="overflow-hidden">
   
 
@@ -19,6 +19,10 @@
                     </div>
                 </div>
         </ng-container>
+
+        <div *ngIf="isBuyPressed" class="fixed left-[37%] top-3/4 text-white">
+          <h1 class="text-xl">{{buySuccess}}</h1>
+        </div>
         <div class="search-container search-content fixed top-[80%] left-[45%] z-10">
             <h1 class="text-white text-xl mb-3 absolute left-[-60%]">Search for Stock By Ticker</h1>
             <div class="flex">

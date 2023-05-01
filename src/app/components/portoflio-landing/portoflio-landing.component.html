@@ -1,9 +1,15 @@
 <app-navbar></app-navbar>
 <div>
-    <div class="z-20 w-screen h-screen bg-black fixed left-0 top-18">
+    <div *ngIf="userStocks" class="z-20 w-screen  bg-slate-900 left-0 top-18">
+        <h1 class="text-white">user stocks:</h1>
+        <div class="mb-5" *ngFor="let stock of userStocks">
+        <p class="text-white">ID: {{stock.stockId}}</p>
+        <p class="text-white">Ticker: {{stock.StockTicker}}</p>
+        <p class="text-white">Shares: {{stock.shares}}</p>
         <div class="flex mt-2">
             <h1 class="mr-2  text-lg text-white">Sell</h1>
             <input class="h-8" type="text" [(ngModel)]="sellAmount" name="sell" id="sell">
           </div>
+        </div>
     </div>
 </div>
