@@ -1,15 +1,14 @@
-
-
-
-
+<app-navbar></app-navbar>
 <body class="overflow-hidden">
-    <a  routerLink="/portfolio-landing" [queryParams]="{ userId: currentUserId }" routerLinkActive="active" ariaCurrentWhenActive="page" class="h-max w-max p-3 rounded-md fixed right-11 z-10 bg-white">Portfolio</a>
-    <ul class="fixed left-[40%]" *ngIf="auth.user$ | async as user">
-        <li class="flex font-bold text-2xl text-white"> Welcome Back  <p class="ml-2 font-normal">{{user.email }}</p></li>
+  
+
+  <div class="container">
+    <ul *ngIf="auth.user$ | async as user">
+        <li class="font-bold text-2xl text-white">Welcome Back <p class="ml-2 font-normal">{{user.email }}</p></li>
     </ul>
-      <app-auth></app-auth>
+  </div>
+
     <div class="grid-container">
-       
         <ng-container *ngIf="stockData">
                 
                 <div class="chart-container">
