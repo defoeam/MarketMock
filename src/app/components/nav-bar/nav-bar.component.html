@@ -1,18 +1,82 @@
-
-<div class="navbar bg-gray-100 w-screen h-20 rounded-md shadow-2xl z-10 shadow-black">
-    <div class="content w-screen h-20">
-    
-        <a routerLink="/"><ul class="flex justify-start mr-[6%] relative">
-           <li><img class="balls z-60 relative left-1 top-0 w-20 h-50" src="../../../assets/logo.jpg" alt="ball" ></li>
-            <li><h1 class="flex relative top-[30%] ml-5 text-xl font-semibold">Mock Stock</h1></li>
-        </ul></a>
-        
-        <ul class="flex justify-end mr-[6%] relative top-[-75%]">
-            <a routerLink="/stock-landing" routerLinkActive="active" ariaCurrentWhenActive="page"><li class="button mr-10">About</li></a>
-            <!--CHANGE CALLBACK URI BEFORE LAUNCH!!!!!!-->
-            <li><app-auth text="Log In" class="button relative top-1/4"></app-auth></li>
-            <!--FIX KEY PROBLEM !!!!!!-->
+<!-- If the user is logged in, only show portfolio and stock buttons. If not logged in, only show about button -->
+<!--
+<nav class="bg-gray-100 rounded-md shadow-2xl" *ngIf="auth.isAuthenticated$ | async; else loggedOut">
+    <div class="max-w-screen-x1 flex items-center justify-between mx-auto h-20">
+        <a routerLink="/" class="flex items-center">
+            <img class="w-20" src="../../../assets/logo.jpg" alt="Marketmock logo" >
+            <span class="flex relative top-[30%] ml-5 text-xl font-semibold">Mock Stock</span>
+        </a>
+      <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+        <ul class="font-medium flex flex-col p-4 md:flex-row">
+          <li>
+            <a routerLink="/portfolio-landing" class="block py-2 pl-3 pr-4 hover:shadow-black md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-110">Portfolio</a>
+          </li>
+          <li>
+            <a routerLink="/stock-landing" class="block py-2 pl-3 pr-4 hover:shadow-black md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-110">Stock landing</a>
+          </li>
+          <app-auth></app-auth>
         </ul>
-
+      </div>
     </div>
-</div>
+  </nav>
+
+  <ng-template #loggedOut>
+    <nav class="bg-gray-100 rounded-md shadow-2xl" >
+        <div class="max-w-screen-x1 flex items-center justify-between mx-auto h-20">
+            <a routerLink="/" class="flex items-center">
+                <img class="w-20" src="../../../assets/logo.jpg" alt="Marketmock logo" >
+                <span class="flex relative top-[30%] ml-5 text-xl font-semibold">Mock Stock</span>
+            </a>
+          <div class="hidden w-full md:block md:w-auto" id="navbar-reduced">
+            <ul class="font-medium flex flex-col p-4 md:flex-row">
+              <li>
+                <a routerLink="/about" class="block py-2 pl-3 pr-4 hover:shadow-black md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-110">About page</a>
+              </li>
+              <app-auth></app-auth>
+            </ul>
+          </div>
+        </div>
+      </nav>
+</ng-template>
+-->
+<nav class="bg-gray-100 rounded-md shadow-2xl w-full" *ngIf="auth.isAuthenticated$ | async; else loggedOut">
+    <div class="flex items-center justify-between h-20 w-full">
+        <a routerLink="/" class="flex items-center">
+            <img class="w-20" src="../../../assets/logo.jpg" alt="Marketmock logo">
+            <span class="flex relative top-[30%] ml-5 text-xl font-semibold">Mock Stock</span>
+        </a>
+        <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+            <ul class="font-medium flex flex-col p-4 md:flex-row">
+                <li>
+                    <a routerLink="/portfolio-landing" class="block py-2 pl-3 pr-4 hover:shadow-black md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-110">Portfolio</a>
+                </li>
+                <li>
+                    <a routerLink="/stock-landing" class="block py-2 pl-3 pr-4 hover:shadow-black md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-110">Stock landing</a>
+                </li>
+                <app-auth></app-auth>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<ng-template #loggedOut>
+    <nav class="bg-gray-100 rounded-md shadow-2xl w-full">
+        <div class="flex items-center justify-between h-20 max-w-screen-x1">
+            <a routerLink="/" class="flex items-center">
+                <img class="w-20" src="../../../assets/logo.jpg" alt="Marketmock logo">
+                <span class="flex relative top-[30%] ml-5 text-xl font-semibold">Mock Stock</span>
+            </a>
+            <div class="hidden w-full md:block md:w-auto" id="navbar-reduced">
+                <ul class="font-medium flex flex-col p-4 md:flex-row">
+                    <li>
+                        <a routerLink="/about" class="block py-2 pl-3 pr-4 hover:shadow-black md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-110">About page</a>
+                    </li>
+                    <app-auth></app-auth>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</ng-template>
+
+<!--CHANGE CALLBACK URI BEFORE LAUNCH!!!!!!-->
+<!--FIX KEY PROBLEM !!!!!!-->

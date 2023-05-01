@@ -2,9 +2,9 @@
     <button class="bg-blue-700 p-2 ml-2 text-white rounded-md hover:bg-blue-900" (click)="auth.logout({ logoutParams: { returnTo: 'http://localhost:4200' } })">
       Log out
     </button>
-  </ng-container>
+</ng-container>
 <ng-template #loggedOut>
-    <button class=" text-white rounded-md" (click)="auth.loginWithRedirect({ 
+    <button class="bg-blue-700 p-2 ml-2 text-white rounded-md hover:bg-blue-900" (click)="auth.loginWithRedirect({ 
         appState: { target: '/stock-landing' }
-      })">{{this.text}}</button>
+      })">Log in</button>
 </ng-template>

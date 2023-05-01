@@ -15,6 +15,7 @@ import { AuthModule } from '@auth0/auth0-angular';
 import { AuthComponent } from './components/auth/auth.component';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { AboutPageComponent } from './components/about-page/about-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +24,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     StockLandingComponent,
     StockGraphComponent,
     PortoflioLandingComponent,
-    AuthComponent
+    AuthComponent,
+    AboutPageComponent,
   ],
   imports: [
     BrowserModule,
