@@ -48,7 +48,7 @@
         <div class="hidden w-full md:block md:w-auto" id="navbar-default">
             <ul class="font-medium flex flex-col p-4 md:flex-row">
                 <li>
-                    <a routerLink="/portfolio-landing" class="block py-2 pl-3 pr-4 hover:shadow-black md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-110">Portfolio</a>
+                    <a routerLink="/portfolio-landing" [queryParams]="{userId:this.userId}" class="block py-2 pl-3 pr-4 hover:shadow-black md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-110">Portfolio</a>
                 </li>
                 <li>
                     <a routerLink="/stock-landing" class="block py-2 pl-3 pr-4 hover:shadow-black md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-110">Stock landing</a>

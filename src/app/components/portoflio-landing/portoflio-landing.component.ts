@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { StockLandingService } from 'src/app/Service/stock-landing.service';
+import { PortfolioService } from 'src/app/portfolio.service';
+import { Component,OnInit } from '@angular/core';
+import { Stock } from 'src/app/Stocks';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-portoflio-landing',
   templateUrl: './portoflio-landing.component.html',
@@ -8,11 +10,22 @@ import { StockLandingService } from 'src/app/Service/stock-landing.service';
 export class PortoflioLandingComponent {
   queryParams = ['userId']
   
-  constructor(public landService: StockLandingService) {}
+  constructor(public portService: PortfolioService,private route: ActivatedRoute) {}
   sellAmount:string = "";
-  
+  userStocks:any[] = [];
+
+  ngOnInit(){
+    this.getAllStocks()
+  }
+
   getAllStocks(){
-    
+    this.route.queryParams.subscribe((params) => {
+      const userId = params['userId'];
+      this.portService.getAllStocks(userId).subscribe((data) => {
+        this.userStocks = data['stocks'];
+        console.log(data)
+      });
+    });
   }
 
   sellShares(){

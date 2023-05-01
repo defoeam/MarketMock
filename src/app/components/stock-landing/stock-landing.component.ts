@@ -37,6 +37,10 @@ export class StockLandingComponent {
   currentStockPrice:Number = 0;
   currentUserId = 0;
   currentStockId=0;
+  //used for showing the user the buy was successful
+  buySuccess:string = '';
+  //flag
+  isBuyPressed:boolean = false;
   APIKEY = 'puJTCSJIJ8hyAoTVJFnOGuDQiJTsnhDL'; //put in .env for release
   ChatAPI = "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"; //CORRUPT API NEED NEW ONE
   constructor(public auth: AuthService,public landService: StockLandingService ,private router: Router) {}
@@ -116,23 +120,34 @@ async getAiText(){
   }
   
   addToPortfolio() {
-    //need input to buy
-    if (this.buyAmount != "")
-    //if the user is authenticated
-    this.auth.user$.subscribe(user => {
-      //postStock with user provided info
-        this.landService.postStock(this.searchText, Number.parseInt(this.buyAmount),this.currentUserId,).subscribe(data => {
-          console.log(data);
-          //set stock id
-          this.currentStockId = data['stockId'];
-        });
-      });
     
+    //need input to buy
+    if (this.buyAmount != "") {
+      //if the user is authenticated
+      this.auth.user$.subscribe(user => {
+        //postStock with user provided info
+        try {
+          //show messgae for 1 sec
+          this.isBuyPressed =true;
+          this.landService.postStock(this.searchText, Number.parseInt(this.buyAmount), this.currentUserId).subscribe(data => {
+            console.log(data);
+            //set stock id
+            this.currentStockId = data['stockId'];
+            this.buySuccess = data['success'];
+            if(!data['success']){
+              this.buySuccess = "You already bought this stock with the Id of " + data['stockId'];
+            }
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      });
+    }
+    //make the message disappear after 4 sec
+    setTimeout(() => {
+      this.isBuyPressed = false;
+    }, 4000)
   }
-
-  buyShares(){
-      
-      }
   
 
 

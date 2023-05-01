@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 @Component({
   selector: 'app-navbar',
@@ -6,5 +6,7 @@ import { AuthService } from '@auth0/auth0-angular';
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent {
+  @Input() userId:number = 0;
+
   constructor(public auth: AuthService) {}
 }
