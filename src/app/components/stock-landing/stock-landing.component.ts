@@ -5,6 +5,7 @@ import { trigger, transition, style, animate,query,stagger } from '@angular/anim
 import { AuthService } from '@auth0/auth0-angular';
 import { Router } from '@angular/router';
 import { StockLandingService } from 'src/app/Service/stock-landing.service';
+import { PortfolioService } from 'src/app/portfolio.service';
 @Component({
   selector: 'app-stock-landing',
   templateUrl: './stock-landing.component.html',
@@ -43,7 +44,7 @@ export class StockLandingComponent {
   isBuyPressed:boolean = false;
   APIKEY = 'puJTCSJIJ8hyAoTVJFnOGuDQiJTsnhDL'; //put in .env for release
   ChatAPI = "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"; //CORRUPT API NEED NEW ONE
-  constructor(public auth: AuthService,public landService: StockLandingService ,private router: Router) {}
+  constructor(public auth: AuthService,public landService: StockLandingService ,private router: Router,private portService: PortfolioService) {}
    async ngOnInit(){
     this.auth.handleRedirectCallback().subscribe(() => {
       this.router.navigate(['/stock-landing']); 
@@ -57,6 +58,7 @@ setUserId(){
   this.auth.user$.subscribe(data=>{
     this.landService.getUser(data?.email).subscribe(response=>{
       this.currentUserId = response['userId'];
+      this.portService.setUserId(this.currentUserId);
     })
     })
 }
@@ -189,7 +191,5 @@ async getAiText(){
       console.log(error)
     }
   }
-
-
 
 }
