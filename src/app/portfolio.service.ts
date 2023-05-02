@@ -8,6 +8,14 @@ import { HttpClient } from '@angular/common/http';
 export class PortfolioService {
 
   constructor(public http:HttpClient) { }
+  private userId:number = -1;
+
+  setUserId(id:number){
+    this.userId = id;
+  }
+  getUserId():number{
+    return this.userId;
+  }
 
   getAllStocks(userId:string):Observable<any>{
     //get stocks for a user
