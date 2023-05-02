@@ -1,9 +1,11 @@
 import { PortfolioService } from 'src/app/portfolio.service';
-import { Component,OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { Stock } from 'src/app/Stocks';
+
 import { ActivatedRoute } from '@angular/router';
 import { firstValueFrom, isObservable, Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-portoflio-landing',
@@ -11,6 +13,7 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./portoflio-landing.component.css']
 })
 export class PortoflioLandingComponent {
+
   queryParams = ['userId']
   
   constructor(public portService: PortfolioService,private route: ActivatedRoute) {}
@@ -56,6 +59,7 @@ export class PortoflioLandingComponent {
     this.BuyButton = false;
   }
 
+
   showTransactionMenu(){
     this.transactionMenu = true;
   }
@@ -66,7 +70,10 @@ export class PortoflioLandingComponent {
 
   async updateStocksBuy(){
     this.route.queryParams.subscribe((params) => {
-      const userId = params['userId'];
+      let userId = params['userId'];
+      if(!userId){
+         userId = params['c'];
+      }
       const stockId = this.selectedStockId;
     if(this.BuyButton){
       this.portService.updateUserShares(userId, stockId,Number.parseInt(this.amount)).subscribe(data=>{
@@ -85,16 +92,27 @@ export class PortoflioLandingComponent {
       this.calculatePortfolioValue()
     },800)
      
+
   }
 
-  getAllStocks(){
+  getAllStocks() {
     this.route.queryParams.subscribe((params) => {
       const userId = params['userId'];
-      this.portService.getAllStocks(userId).subscribe((data) => {
-        this.userStocks = data;
-        console.log(this.userStocks)
-      });
+      if (userId) {
+        this.portService.getAllStocks(userId).subscribe((data) => {
+          this.userStocks = data;
+          console.log(this.userStocks);
+        });
+      } else {
+        const userId = params['c'];
+        this.portService.getAllStocks(userId).subscribe((data) => {
+          this.userStocks = data;
+          console.log(this.userStocks);
+        });
+        this.userId = userId;
+      }
     });
+
 
   }
 
@@ -160,4 +178,5 @@ export class PortoflioLandingComponent {
         this.portfolioValue = totalValue;
         this.portfolioValueString = totalValue.toFixed(2);
     }
+
 }

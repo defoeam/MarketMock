@@ -11,6 +11,7 @@ export class StockGraphComponent {
   @Input() aiText:string ="";  // input data for the chart
   public chart: any = null // reference to the chart object
   useAiText:string = ""
+  //when changes are made call these functions
   ngOnChanges(changes: SimpleChanges): void { 
     this.createChart();
     this.resizeChart()
@@ -18,10 +19,14 @@ export class StockGraphComponent {
  
 
 resizeChart() {
+  //get the chart
   const canvas = document.getElementById('LineChart') as HTMLCanvasElement;
+  //if its init
   if (canvas) {
+    //getting parent for width
     const parent = canvas.parentElement;
     if (parent) {
+      //set the size
       const rect = parent.getBoundingClientRect();
       canvas.width = rect.width;
       canvas.height = rect.height;
@@ -37,19 +42,22 @@ resizeChart() {
       this.chart.data.datasets[0].data = this.dataSets;
       this.chart.update();
     }
-    //to do make labels dynamic
+    
     else{
     this.chart = new Chart('LineChart', {
       type: 'line',
       data: {
+        //add lables to chart
         labels: Array.from(Array(this.dataSets.length).keys()),
         datasets: [{
           label: 'Stock Data',
           data: this.dataSets,
           borderColor: 'white',
-          fill: false
+          fill: true,
+          backgroundColor: 'black'
         }]
       },
+      //extra chart options
       options: {
         aspectRatio: 1.5,
         responsive: true,
@@ -75,9 +83,9 @@ resizeChart() {
     });
   }
   }
-  
-  removeChart(newData:any[]){
 
+  //remove the chart from the screen
+  removeChart(newData:any[]){
      this.chart.data.datasets.forEach((dataset:any)=>{
       dataset.data =newData;
      });
