@@ -6,7 +6,6 @@ import { Stock } from '../Stocks';
   providedIn: 'root'
 })
 export class StockLandingService {
-
   constructor(public http:HttpClient) { }
   //get all
   getUsers() {
