@@ -1,23 +1,35 @@
 body{
-    width: 100vw;
-    height: 100vh;
-    background-image:url("../../../assets/paris.png");
+    height: 91.34vh;
+    max-width: 100%;
+    max-height:100%;
+    background-image:url("../../../assets/sateratedHeroimg.jpg");
     background-size: cover;
 }
+
+.current-price {
+    left: 45.5%;
+    top: 50%;
+}
+
+.search-container{
+    top: 780px;
+}
+
 .app-stock-graph {
     position: absolute;
     left: 20%;
     top: 60%;
     transform: translate(-50%, -50%);
-    max-width: 100%;
-  max-height: 100%;
+    max-width: 80%;
+    max-height: 80%;
+    background-color:grey;
   }
   
 @media (max-width: 1280px)  {
     .chatBot{
         visibility: hidden;
     }
-    
+
 }
 div.container{
     text-align: center;

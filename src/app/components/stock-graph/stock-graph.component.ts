@@ -47,7 +47,8 @@ resizeChart() {
           label: 'Stock Data',
           data: this.dataSets,
           borderColor: 'white',
-          fill: false
+          fill: true,
+          backgroundColor: 'black'
         }]
       },
       options: {
