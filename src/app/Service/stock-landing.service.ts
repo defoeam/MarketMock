@@ -28,10 +28,14 @@ export class StockLandingService {
     return this.http.post('http://127.0.0.1:8000/postUser/',data);
   }
 
-  postStock(ticker:string, shares:number, userId:number):Observable<any>{
-      const Stock={StockTicker:ticker, shares:shares}
-      return this.http.post(`http://127.0.0.1:8000/postStock/${userId}/`,Stock)
+  postStock(ticker:string):Observable<any>{
+      const Stock={StockTicker:ticker}
+      return this.http.post(`http://127.0.0.1:8000/postStock/${ticker}`,Stock)
   }
+  postStockToUser(userId:number,ticker:string,sharesToAdd:number):Observable<any>{
+    const Stock={}
+    return this.http.post(`http://127.0.0.1:8000/postStockToUser/${userId}/${ticker}/${sharesToAdd}`,Stock)
+}
   buyShares(userId:number,stockId:number,sharesToAdd:number){
    //http update
   }

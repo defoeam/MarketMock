@@ -126,28 +126,24 @@ async getAiText(){
       //if the user is authenticated
       this.auth.user$.subscribe(user => {
         //postStock with user provided info
-        try {
           //show messgae for 1 sec
           this.isBuyPressed =true;
-          this.landService.postStock(this.searchText, Number.parseInt(this.buyAmount), this.currentUserId).subscribe(data => {
-            console.log(data);
-            //set stock id
-            this.currentStockId = data['stockId'];
-            this.buySuccess = data['success'];
-            if(!data['success']){
-              this.buySuccess = "You already bought this stock with the Id of " + data['stockId'];
-            }
-          });
-        } catch (error) {
-          console.error(error);
-        }
-      });
-    }
+          this.landService.postStock(this.searchText).subscribe(data => {
+            
+            this.landService.postStockToUser(this.currentUserId,this.searchText, Number(this.buyAmount)).subscribe(data => {
+              console.log(data)
+              this.buySuccess = "User: "+ data['user_id'] + " Sucessfully bought" + data['shares_added'] + " shares";
+            })
+           
+           
+          })
+        });
     //make the message disappear after 4 sec
     setTimeout(() => {
       this.isBuyPressed = false;
     }, 4000)
   }
+}
   
 
 
