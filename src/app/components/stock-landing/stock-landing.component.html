@@ -1,45 +1,38 @@
 <app-navbar [userId]="this.currentUserId"></app-navbar>
+
 <body class="overflow-hidden">
-  
+  <div class="grid-container">
+    <ng-container *ngIf="stockData">
+      <div class="chart-container">
+        <app-stock-graph class="" [dataSets]="stockData" [aiText]="aiText"></app-stock-graph>
+      </div>
+      <div class="chart-info">
+        <p class="current-price relative text-white left-9 text-lg bottom-[-1.3em]">Current Share Price: ${{currentStockPrice}}</p>
+      </div>
+    </ng-container>
 
-    <div class="grid-container">
-        <ng-container *ngIf="stockData">
-                
-                <div class="chart-container">
-                    <app-stock-graph class="w-full h-full" [dataSets]="stockData" [aiText]="aiText"></app-stock-graph>
-                </div>
-                <div class="chart-info">
-                    <p class="text-white relative left-11 bottom-[-10em]" >Current: {{currentStockPrice}}</p>
-                </div>
-                <div class="chatbot-container">
-                    <div class="chatBot fixed top-[12%] p-5 bg-emerald-600 bg-opacity-95 rounded-lg w-1/4 h-max text-white ml-5">
-                        <h1 class="flex justify-center text-lg font-bold">ChatGPT: {{searchText}}</h1>
-                        <p>{{aiText}}</p>
-                        
-                    </div>
-                </div>
-        </ng-container>
-
-        <div *ngIf="isBuyPressed" class="fixed left-[37%] top-3/4 text-white">
+    
+    <div class="search-container search-content fixed left-[45%] z-10">
+      <h1 class="text-white text-xl mb-3 absolute left-[-60%]">Search for Stock By Ticker</h1>
+      <div class="flex">
+        <input class="w-[15em] h-8 rounded-md indent-1 mr-2" [(ngModel)]="searchText" type="text" name="search"
+          id="searchIn">
+        <button
+          class="text-white bg-sky-600 pl-3 pr-3 rounded-xl shadow-md shadow-black hover:shadow-none hover:bg-sky-900 mr-2"
+          (click)="onSubmit()">Graph</button>
+        <button
+          class="text-white bg-sky-600 pl-3 pr-3 rounded-xl shadow-md shadow-black hover:shadow-none hover:bg-sky-900"
+          (click)="addToPortfolio()">Add To</button>
+      </div>
+      <div class="buy-sell-container mt-3">
+        <div class="flex">
+          <h1 class="mr-2 text-lg text-white">Buy</h1>
+          <input class="h-8" type="text" [(ngModel)]="buyAmount" name="buy" id="buy">
+        </div>
+        <div *ngIf="isBuyPressed" class="fixed left-[39.5%] text-white">
           <h1 class="text-xl">{{buySuccess}}</h1>
         </div>
-        <div class="search-container search-content fixed top-[80%] left-[45%] z-10">
-            <h1 class="text-white text-xl mb-3 absolute left-[-60%]">Search for Stock By Ticker</h1>
-            <div class="flex">
-              <input class="w-[15em] h-8 rounded-md indent-1 mr-2" [(ngModel)]="searchText" type="text" name="search" id="searchIn">
-              <button class="text-white bg-sky-600 pl-3 pr-3 rounded-xl shadow-md shadow-black hover:shadow-none hover:bg-sky-900 mr-2" (click)="onSubmit()">Graph</button>
-              <button class="text-white bg-sky-600 pl-3 pr-3 rounded-xl shadow-md shadow-black hover:shadow-none hover:bg-sky-900" (click)="addToPortfolio()">Add To</button>
-            </div>
-            <div class="buy-sell-container mt-3">
-              <div class="flex">
-                <h1 class="mr-2 text-lg text-white">Buy</h1>
-                <input class="h-8" type="text" [(ngModel)]="buyAmount" name="buy" id="buy">
-              </div>
-             
-            </div>
-          </div>
-          
-        
+      </div>
     </div>
+  </div>
 </body>
-
