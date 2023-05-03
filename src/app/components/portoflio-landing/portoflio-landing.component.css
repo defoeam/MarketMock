@@ -1,0 +1,20 @@
+@import '~bootstrap/dist/css/bootstrap.min.css';
+body{
+    height: 91.34vh;
+    max-width: 100%;
+    max-height:100%;
+    background-size: cover;
+    background-image:url("../../../assets/abstract.jpg");
+}
+table{
+    border-collapse: collapse;
+    width: 100%;
+}
+td, th{
+    border: 1px solid black;
+    padding: 8px;
+}
+tr{
+    background-color:white; 
+    color:black;
+}
