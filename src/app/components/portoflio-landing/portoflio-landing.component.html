@@ -3,7 +3,7 @@
   <div class="z-10 w-screen left-0 top-18">
       <div class="container">
         <br>
-        <table class="table" style="float:left">
+        <table class="table mainT" style="float:left">
             <thead>
               <tr>
                 <th scope="col">Stock</th>
@@ -20,6 +20,7 @@
                 <td>{{this.prices[i]}}</td>
                 <td>${{this.values[i]}}</td>
                 <td><button type="button" class="btn btn-primary" (click)="showTransactionMenu(); selectedStockId = stock.stock">Buy/Sell {{stock.stock}}</button></td>
+                
               </tr>
             </tbody>
           </table>
@@ -32,6 +33,8 @@
           <div *ngIf="transactionMenu">
             <button type="button" class="btn btn-success" (click)="showBuy()">Buy</button>
             <button type="button" class="btn btn-danger" (click)="showSell()">Sell</button>
+           <button type="button" class="btn btn-danger" (click)="deleteStock(this.selectedStockId)">Delete {{selectedStockId}}</button>
+           
             <button type="button" class="btn btn-outline-light" (click)="hideTransactionMenu()">Hide menu</button><br>
 
             <h1 *ngIf="SellButton" class="mr-2  text-lg text-white">Sell</h1>
