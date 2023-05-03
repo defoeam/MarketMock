@@ -106,7 +106,14 @@ export class PortoflioLandingComponent {
       } 
     });
 
-   
+    //Query params secerity
+    this.router.navigate([],{
+      relativeTo:this.route,
+      queryParams:{
+        userId:this.portService.getUserId().toString()
+      },
+      queryParamsHandling:'merge'
+    })
 
   }
 
