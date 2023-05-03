@@ -33,6 +33,10 @@ export class PortfolioService {
     const data = {};
     return this.http.put(`http://127.0.0.1:8000/updateStockSharesSell/${userId}/${stockTicker}/${shares}`,data);
   }
- 
+  deleteUserStock(userId:string,stockId:string){
+    //no body needed
+    const data = {};
+    return this.http.delete(`http://127.0.0.1:8000/deleteUserStock/${userId}/${stockId}`,data);
+  }
 
 }

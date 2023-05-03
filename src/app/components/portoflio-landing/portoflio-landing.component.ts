@@ -40,10 +40,10 @@ export class PortoflioLandingComponent {
     },1200)
     setTimeout(()=>{
       this.getAllStockPrices()
-    },2400)
+    },3400)
     setTimeout(()=>{
       this.calculatePortfolioValue()
-    },3600)
+    },4600)
   }
 
   showBuy() {
@@ -114,30 +114,41 @@ export class PortoflioLandingComponent {
 
   }
 
-  //Error, sometimes the prices are backwards, other times not
   async getAllStockPrices(){
-    this.prices = [];
-    for(var stock of this.userStocks){
-      this.getStock(stock.stock).then(data => {
-        // Weeks worth of data is always 5
-        const newData:number[]= []; // clear previous data
-        data['results'].forEach((value:any, index:any) => {
-          newData.push(value['o']);
-          newData.push(value['h']);
-          newData.push(value['l']);
-          newData.push(value['c']);
+    try {
+      //need to wait for all request to be complete
+      const stockPrices = await Promise.all(this.userStocks.map((data) => {
+        return this.getStock(data.stock).then(data => {
+          // Weeks worth of data is always 5
+          const newData:number[]= []; // clear previous data
+          data['results'].forEach((value:any, index:any) => {
+            const close = value['c'];
+            newData.push(close);
+          });
+          //money spent update here
+          const currentStockPrice = newData[newData.length-1]; //
+          return currentStockPrice;
         });
-        var stockData = newData;
-        
-        var currentStockPrice = stockData[stockData.length-1]; //
-        //Check if chart is initialized first to avoid future errors
+      }));
+  
+      // match the prices to the user stocks by looping over both arrays in the same order
+      this.prices = [];
+      this.userStocks.forEach((stock, index) => {
+        const currentStockPrice = stockPrices[index];
         this.prices.push(currentStockPrice);
       });
+  
+      console.log(this.prices);
+    } catch (error) {
+      console.error(error);
     }
-    //Reversed to get direction correct in indexing
-    this.prices.reverse();
-    console.log(this.prices);
   }
+  
+    deleteStock(stockId:string){
+      this.portService.deleteUserStock(this.portService.getUserId().toString(),stockId).subscribe(data=>{
+        console.log(data);
+      });
+    }
 
     async getStock(text:string) {
       //get current date
@@ -169,7 +180,7 @@ export class PortoflioLandingComponent {
         var totalValue = 0;
         var stockValue = 0;
         for(let i=0; i<this.prices.length; i++){
-          stockValue = (this.prices[i] * this.userStocks[i].shares)
+          stockValue = (this.prices[i] * this.userStocks[i].shares);
           totalValue += stockValue
           this.values.push(stockValue.toFixed(2))
         }
