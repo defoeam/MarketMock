@@ -19,7 +19,7 @@
                 <td>{{stock.shares}}</td>
                 <td>{{this.prices[i]}}</td>
                 <td>${{this.values[i]}}</td>
-                <td><button type="button" class="btn btn-primary" (click)="showTransactionMenu(); selectedStockId = stock.stock">Buy/Sell {{stock.stock}}</button></td>
+                <td><button type="button" class="btn btn-primary" (click)="showTransactionMenu(); selectedStockId = stock.stock; selectedId = i">Buy/Sell {{stock.stock}}</button></td>
                 
               </tr>
             </tbody>
