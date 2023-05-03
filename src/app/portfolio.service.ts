@@ -17,9 +17,9 @@ export class PortfolioService {
     return this.userId;
   }
   
-  getUser(userId:string):Observable<any>{
+  getUser(userId:number):Observable<any>{
     //get stocks for a user
-    return this.http.get(`http://127.0.0.1:8000/users/${userId}`)
+    return this.http.get(`http://127.0.0.1:8000/users/${userId}`,{})
   }
 
   getAllStocks(userId:string):Observable<any>{

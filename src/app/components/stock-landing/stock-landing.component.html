@@ -25,10 +25,6 @@
           (click)="addToPortfolio()">Add To</button>
       </div>
       <div class="buy-sell-container mt-3">
-        <div class="flex">
-          <h1 class="mr-2 text-lg text-white">Buy</h1>
-          <input class="h-8" type="text" [(ngModel)]="buyAmount" name="buy" id="buy">
-        </div>
         <div *ngIf="isBuyPressed" class="fixed left-[39.5%] text-white">
           <h1 class="text-xl">{{buySuccess}}</h1>
         </div>

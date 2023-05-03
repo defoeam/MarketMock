@@ -17,7 +17,7 @@ export class PortoflioLandingComponent {
   queryParams = ['userId']
   
   constructor(public portService: PortfolioService,private route: ActivatedRoute,public router: Router) {}
-  amount:string = "";
+  amount:string = " ";
   userStocks:any[] = [];
   prices:number[] = [];
   values:string[] = [];
@@ -93,8 +93,6 @@ export class PortoflioLandingComponent {
      setTimeout(()=>{
       this.calculatePortfolioValue()
     },800)
-     
-
   }
 
   getAllStocks() {
@@ -120,7 +118,7 @@ export class PortoflioLandingComponent {
   }
 
   getUserMoney(){
-    this.portService.getUser(this.portService.getUserId().toString()).subscribe(money=>{
+    this.portService.getUser(this.portService.getUserId()).subscribe(money=>{
       this.userMoneySpent = money['money_spent']; //if user has money
       if(!this.userMoneySpent){
         this.userMoneySpent = 0 //if user doesnt have money

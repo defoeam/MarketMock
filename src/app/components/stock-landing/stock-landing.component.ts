@@ -40,8 +40,6 @@ export class StockLandingComponent {
   userInfo: any;
   //username
   text:string | undefined = '';
-  //buy input text
-  buyAmount:string = "";
   //current price of seached stock
   currentStockPrice:Number = 0;
   //current users id
@@ -72,6 +70,7 @@ setUserId(){
   this.auth.user$.subscribe(data=>{
     this.landService.getUser(data?.email).subscribe(response=>{
       this.currentUserId = response['userId'];
+      console.log(this.currentUserId);
       this.portService.setUserId(this.currentUserId);
     })
     })
@@ -152,8 +151,6 @@ async getAiText(){
   
 
   addToPortfolio() {
-    //need input to buy
-    if (this.buyAmount != "") {
       //if the user is authenticated
       this.auth.user$.subscribe(user => {
         //postStock with user provided info
@@ -161,7 +158,9 @@ async getAiText(){
           this.isBuyPressed =true;
           this.landService.postStock(this.searchText).subscribe(data => {
             
-            this.landService.postStockToUser(this.currentUserId,this.searchText, Number(this.buyAmount)).subscribe(data => {
+            this.landService.postStockToUser(this.currentUserId,this.searchText,0).subscribe(data => {
+              //money_spent
+              //get ammount of shares and shares current value from get stock
               console.log(data)
               this.buySuccess = data.message;
             })
@@ -172,7 +171,6 @@ async getAiText(){
     setTimeout(() => {
       this.isBuyPressed = false;
     }, 4000)
-  }
 }
   
 
