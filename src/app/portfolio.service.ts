@@ -16,10 +16,19 @@ export class PortfolioService {
   getUserId():number{
     return this.userId;
   }
+  
+  getUser(userId:string):Observable<any>{
+    //get stocks for a user
+    return this.http.get(`http://127.0.0.1:8000/users/${userId}`)
+  }
 
   getAllStocks(userId:string):Observable<any>{
     //get stocks for a user
     return this.http.get(`http://127.0.0.1:8000/getUserStocks/${userId}`)
+  }
+
+  updateUserMoney(userId:string,money:string):Observable<any>{
+    return this.http.put(`http://127.0.0.1:8000/updateMoneySpent/${userId}/${money}`,{})
   }
 
   updateUserShares(userId:number, stockTicker:string, shares:number){

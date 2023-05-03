@@ -25,7 +25,7 @@ export class PortoflioLandingComponent {
   BuyButton = true;
   SellButton = false;
   message = "";
-  declare Zone: any;
+  userMoneySpent:number = 0;
   //get user selected stock
   selectedStockId:string = "";
   APIKEY = 'puJTCSJIJ8hyAoTVJFnOGuDQiJTsnhDL'; //put in .env for release
@@ -114,6 +114,15 @@ export class PortoflioLandingComponent {
 
   }
 
+  getUserMoney(){
+    this.portService.getUser(this.portService.getUserId().toString()).subscribe(money=>{
+      this.userMoneySpent = money['money_spent']; //if user has money
+      if(!this.userMoneySpent){
+        this.userMoneySpent = 0 //if user doesnt have money
+      }
+    });
+  }
+
   async getAllStockPrices(){
     try {
       //need to wait for all request to be complete
@@ -125,7 +134,6 @@ export class PortoflioLandingComponent {
             const close = value['c'];
             newData.push(close);
           });
-          //money spent update here
           const currentStockPrice = newData[newData.length-1]; //
           return currentStockPrice;
         });
@@ -173,17 +181,29 @@ export class PortoflioLandingComponent {
         }
     }
 
+    updateUserMoney(money:string){
+      this.portService.updateUserMoney(this.portService.getUserId().toString(),money).subscribe(data=>{
+        return data.message;
+      })
+    }
+
     //method to calculate total portfolio value
     async calculatePortfolioValue(){
         this.values = [];
 
         var totalValue = 0;
         var stockValue = 0;
+        //money spent update here
+        this.getUserMoney();
         for(let i=0; i<this.prices.length; i++){
           stockValue = (this.prices[i] * this.userStocks[i].shares);
+          //update userMoney
+          this.userMoneySpent += stockValue
           totalValue += stockValue
           this.values.push(stockValue.toFixed(2))
         }
+        //updateMoneySpent
+        this.updateUserMoney(this.userMoneySpent.toString())
         this.portfolioValue = totalValue;
         this.portfolioValueString = totalValue.toFixed(2);
     }
