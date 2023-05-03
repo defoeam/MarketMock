@@ -23,7 +23,7 @@ export class StockLandingService {
 
   postUser(name:string | undefined): Observable<any> | undefined{
     let stock: Array<Stock> = [];
-    const data = { userName:name,stocks:stock };
+    const data = { userName:name,stocks:stock,money_spent:0 };
     return this.http.post('http://127.0.0.1:8000/postUser/',data);
   }
 
