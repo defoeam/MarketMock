@@ -54,7 +54,7 @@ export class StockLandingComponent {
   isBuyPressed:boolean = false;
   APIKEY = 'puJTCSJIJ8hyAoTVJFnOGuDQiJTsnhDL'; //put in .env for release
   ChatAPI = "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"; //CORRUPT API NEED NEW ONE
-<<
+
   constructor(public auth: AuthService,public landService: StockLandingService ,private router: Router,private portService: PortfolioService) {}
    async ngOnInit(){
 
@@ -163,7 +163,7 @@ async getAiText(){
             
             this.landService.postStockToUser(this.currentUserId,this.searchText, Number(this.buyAmount)).subscribe(data => {
               console.log(data)
-              this.buySuccess = "User: "+ data['user_id'] + " Sucessfully bought" + data['shares_added'] + " shares";
+              this.buySuccess = data.message;
             })
   
           })

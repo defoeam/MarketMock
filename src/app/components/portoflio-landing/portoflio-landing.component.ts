@@ -2,7 +2,7 @@ import { PortfolioService } from 'src/app/portfolio.service';
 import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { Stock } from 'src/app/Stocks';
 
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom, isObservable, Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 
@@ -16,7 +16,7 @@ export class PortoflioLandingComponent {
 
   queryParams = ['userId']
   
-  constructor(public portService: PortfolioService,private route: ActivatedRoute) {}
+  constructor(public portService: PortfolioService,private route: ActivatedRoute,public router: Router) {}
   amount:string = "";
   userStocks:any[] = [];
   prices:number[] = [];
@@ -97,22 +97,16 @@ export class PortoflioLandingComponent {
 
   getAllStocks() {
     this.route.queryParams.subscribe((params) => {
-      const userId = params['userId'];
+      const userId = this.portService.getUserId().toString()
       if (userId) {
         this.portService.getAllStocks(userId).subscribe((data) => {
           this.userStocks = data;
           console.log(this.userStocks);
         });
-      } else {
-        const userId = params['c'];
-        this.portService.getAllStocks(userId).subscribe((data) => {
-          this.userStocks = data;
-          console.log(this.userStocks);
-        });
-        this.userId = userId;
-      }
+      } 
     });
 
+   
 
   }
 
