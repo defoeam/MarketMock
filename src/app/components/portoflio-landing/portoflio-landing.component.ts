@@ -24,10 +24,12 @@ export class PortoflioLandingComponent {
   transactionMenu = false;
   BuyButton = true;
   SellButton = false;
+  newData:number[]= [];
   message = "";
   userMoneySpent:number = 0;
   //get user selected stock
   selectedStockId:string = "";
+  selectedId:number = 0;
   APIKEY = 'puJTCSJIJ8hyAoTVJFnOGuDQiJTsnhDL'; //put in .env for release
 
   //string and value are separate for formatting
@@ -74,7 +76,10 @@ export class PortoflioLandingComponent {
       const stockId = this.selectedStockId;
     if(this.BuyButton){
       this.portService.updateUserShares(userId, stockId,Number.parseInt(this.amount)).subscribe(data=>{
-        console.log(data);
+        const shareValue = this.newData[this.selectedId] * Number.parseInt(this.amount);
+        this.updateUserMoney(shareValue.toString());
+        console.log(shareValue);
+        console.log("balls" + this.selectedId);
         this.getAllStocks()
       })
     }
@@ -129,16 +134,16 @@ export class PortoflioLandingComponent {
       const stockPrices = await Promise.all(this.userStocks.map((data) => {
         return this.getStock(data.stock).then(data => {
           // Weeks worth of data is always 5
-          const newData:number[]= []; // clear previous data
+          this.newData= []; // clear previous data
           data['results'].forEach((value:any, index:any) => {
             const close = value['c'];
-            newData.push(close);
+            this.newData.push(close);
           });
-          const currentStockPrice = newData[newData.length-1]; //
+          const currentStockPrice = this.newData[this.newData.length-1]; //
           return currentStockPrice;
         });
       }));
-  
+      console.log(this.newData);
       // match the prices to the user stocks by looping over both arrays in the same order
       this.prices = [];
       this.userStocks.forEach((stock, index) => {
@@ -183,7 +188,7 @@ export class PortoflioLandingComponent {
 
     updateUserMoney(money:string){
       this.portService.updateUserMoney(this.portService.getUserId().toString(),money).subscribe(data=>{
-        return data.message;
+        return data.message
       })
     }
 
@@ -197,13 +202,9 @@ export class PortoflioLandingComponent {
         this.getUserMoney();
         for(let i=0; i<this.prices.length; i++){
           stockValue = (this.prices[i] * this.userStocks[i].shares);
-          //update userMoney
-          this.userMoneySpent += stockValue
           totalValue += stockValue
           this.values.push(stockValue.toFixed(2))
         }
-        //updateMoneySpent
-        this.updateUserMoney(this.userMoneySpent.toString())
         this.portfolioValue = totalValue;
         this.portfolioValueString = totalValue.toFixed(2);
     }
