@@ -1,63 +1,46 @@
 <app-navbar></app-navbar>
-<div class="z-20 w-screen bg-red-100 left-0 top-18">
-    <!-- <div *ngIf="userStocks" class="z-20 w-screen  bg-slate-900 left-0 top-18">
-        
-        <h1 class="text-white text-xl mb-6">User Stocks:</h1>
-        <button class="bg-blue-700 p-2 rounded-lg" (click)="showBuy()">Buy</button>
-        <button class="bg-blue-700 ml-4 p-2 mb-5 rounded-lg" (click)="showSell()">Sell</button>
-    <h1 class="text-white text-xl mb-6">{{this.message}}</h1>
-       <div class="mb-5" *ngFor="let stock of userStocks; index as i" (click)="selectedStockId = stock.stock">
-            <p class="text-white">Ticker: {{stock.stock}}</p>
-            <p class="text-white">Shares: {{stock.shares}}</p>
-            <p class="text-white">Current: {{this.prices[i]}}</p>
-            <div class="flex mt-2">
-                <h1 *ngIf="SellButton" class="mr-2  text-lg text-white">Sell</h1>
-                <h1 *ngIf="BuyButton" class="mr-2  text-lg text-white">Buy</h1>
-                <input class="h-8" type="text" [(ngModel)]="amount" name="sell" id="sell">
-                <button type="submit" (click)="updateStocksBuy()" class="bg-blue-500 ml-5 p-2 rounded-md">Submit</button>
-            </div>
-        </div>
-        <button type="submit" (click)="getAllStockPrices()" class="bg-blue-500 ml-5 p-2 rounded-md">Refresh prices</button>
-        <button type="submit" (click)="calculatePortfolioValue()" class="bg-blue-500 ml-5 p-2 rounded-md">Calculate Value</button>
-        <p class="text-white">Total Value: ${{this.portfolioValueString}}</p>
-    </div> -->
-    <div>
-        <table class="table-auto">
+<body class="overflow-hidden">
+  <div class="z-10 w-screen left-0 top-18">
+      <div class="container">
+        <br>
+        <table class="table" style="float:left">
             <thead>
               <tr>
-                <th>Stock</th>
-                <th>Shares</th>
-                <th>Current price per share</th>
-                <th>Your value of stock</th>
-                <th>Buy/Sell</th>
+                <th scope="col">Stock</th>
+                <th scope="col">Shares</th>
+                <th scope="col">Current price per share</th>
+                <th scope="col">Your value of stock</th>
+                <th scope="col">Buy/Sell</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let stock of userStocks; index as i">
-                <td>{{stock.stock}}</td>
+              <tr *ngFor="let stock of userStocks; index as i" class="talbe-light">
+                <th scope="row">{{stock.stock}}</th>
                 <td>{{stock.shares}}</td>
                 <td>{{this.prices[i]}}</td>
                 <td>${{this.values[i]}}</td>
-                <td><button class="bg-blue-500 ml-5 p-2 rounded-md" (click)="showTransactionMenu(); selectedStockId = stock.stock">Buy/Sell</button></td>
+                <td><button type="button" class="btn btn-primary" (click)="showTransactionMenu(); selectedStockId = stock.stock">Buy/Sell {{stock.stock}}</button></td>
               </tr>
             </tbody>
           </table>
 
-          <p>{{this.portfolioValueString}}</p>
-          <button type="submit" (click)="getAllStockPrices()" class="bg-blue-500 ml-5 p-2 rounded-md">Refresh prices</button>
-            <button type="submit" (click)="calculatePortfolioValue()" class="bg-blue-500 ml-5 p-2 rounded-md">Calculate values</button>
+          <br>
+          <h5 style="color:white">Your portfolio's total value is:</h5>
+          <h3 style="color: white">${{this.portfolioValueString}}</h3>
+          <br>
 
           <div *ngIf="transactionMenu">
-            <button class="bg-blue-700 p-2 rounded-lg" (click)="showBuy()">Buy</button>
-            <button class="bg-blue-700 ml-4 p-2 mb-5 rounded-lg" (click)="showSell()">Sell</button>
+            <button type="button" class="btn btn-success" (click)="showBuy()">Buy</button>
+            <button type="button" class="btn btn-danger" (click)="showSell()">Sell</button>
+            <button type="button" class="btn btn-outline-light" (click)="hideTransactionMenu()">Hide menu</button><br>
 
             <h1 *ngIf="SellButton" class="mr-2  text-lg text-white">Sell</h1>
             <h1 *ngIf="BuyButton" class="mr-2  text-lg text-white">Buy</h1>
             <input class="h-8" type="text" [(ngModel)]="amount" name="sell" id="sell">
-            <!-- Need update, then calculate. adding in updateStocksBuy() method -->
-            <button type="submit" (click)="updateStocksBuy()" class="bg-blue-500 ml-5 p-2 rounded-md">Submit</button>
+            <button type="button" class="btn btn-primary" (click)="updateStocksBuy()">Submit</button>
           </div>
           
     </div>
     
-</div>
+  </div>
+</body>

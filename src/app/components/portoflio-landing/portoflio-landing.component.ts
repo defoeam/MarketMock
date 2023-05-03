@@ -44,9 +44,6 @@ export class PortoflioLandingComponent {
     setTimeout(()=>{
       this.calculatePortfolioValue()
     },3600)
-    // this.getAllStocks()
-    // this.getAllStockPrices()
-    // this.calculatePortfolioValue();
   }
 
   showBuy() {
