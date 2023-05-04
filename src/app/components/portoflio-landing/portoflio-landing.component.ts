@@ -86,7 +86,7 @@ export class PortoflioLandingComponent {
       const stockId = this.selectedStockId;
     if(this.BuyButton){
       this.portService.updateUserShares(userId, stockId,Number.parseInt(this.amount)).subscribe(data=>{
-        const shareValue = this.newData[this.selectedId] * Number.parseInt(this.amount);
+        const shareValue = this.prices[this.selectedId] * Number.parseFloat(this.amount);
         this.updateUserMoney(shareValue.toString());
         console.log(shareValue);
         console.log("balls" + this.selectedId);
@@ -145,8 +145,11 @@ export class PortoflioLandingComponent {
           // Weeks worth of data is always 5
           this.newData= []; // clear previous data
           data['results'].forEach((value:any, index:any) => {
+            const open = value['o'];
+            const high = value['h'];
+            const low = value['l'];
             const close = value['c'];
-            this.newData.push(close);
+            this.newData.push(open,close,high,low);
           });
           const currentStockPrice = this.newData[this.newData.length-1]; //
           return currentStockPrice;
