@@ -28,8 +28,6 @@
           <br>
           <h5 style="color:white">Your portfolio's total value is:</h5>
           <h3 style="color: white">${{this.portfolioValueString}}</h3>
-          <h5 style="color:white">You Have Spent a Total of:</h5>
-          <h3 style="color: white">${{this.userMoneySpent}}</h3>
           <br>
 
           <div *ngIf="transactionMenu" style="position: absolute">
@@ -44,7 +42,7 @@
             <input class="h-8" type="text" [(ngModel)]="amount" name="sell" id="sell">
             <button type="button" class="btn btn-primary" (click)="updateStocksBuy()">Submit</button>
           </div>
-          <div class="relative" style="left:60%; bottom:140px">
+          <div class="relative" style="left:60%; bottom:90px">
             <h3 *ngIf="displayDonut" class="ps-5 ms-4" style="color: white">Portfolio Breakdown</h3>
             <canvas id="valueChart" style="width: 400px; height: 400px; max-width: 400px; max-height:400px"></canvas>
           </div>
