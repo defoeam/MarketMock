@@ -5,6 +5,7 @@ import { Stock } from 'src/app/Stocks';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom, isObservable, Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { Chart } from 'chart.js/auto';
 
 
 @Component({
@@ -36,6 +37,9 @@ export class PortoflioLandingComponent {
   portfolioValue = 0;
   portfolioValueString = "";
 
+  donutChart: any = null
+  displayDonut : boolean = false;
+
   async ngOnInit() {
     setTimeout(()=>{
       this.getAllStocks()
@@ -45,7 +49,13 @@ export class PortoflioLandingComponent {
     },3400)
     setTimeout(()=>{
       this.calculatePortfolioValue()
+      
     },4600)
+
+    setTimeout(() => {
+      this.loadDonut()
+    }, 5200)
+    
   }
 
   showBuy() {
@@ -92,6 +102,7 @@ export class PortoflioLandingComponent {
      })
      setTimeout(()=>{
       this.calculatePortfolioValue()
+      this.loadDonut()
     },800)
   }
 
@@ -205,6 +216,41 @@ export class PortoflioLandingComponent {
         }
         this.portfolioValue = totalValue;
         this.portfolioValueString = totalValue.toFixed(2);
+    }
+
+    loadDonut(){
+      if(!this.prices) return;
+
+      let tickerList: string[] = [];
+      let stockData: number[] = [];
+      for(let i = 0; i < this.userStocks.length; i++){
+        tickerList.push(this.userStocks[i].stock);
+        stockData.push(this.userStocks[i].shares * this.prices[i])
+      }
+
+      console.log(stockData)
+      if(isNaN(stockData[0])) return;
+      
+      if(this.donutChart){
+        this.donutChart.data.datasets[0].data = stockData;
+        this.donutChart.update();
+      } else {
+        this.donutChart = new Chart("valueChart", {
+          type: "doughnut",
+          data: {
+            labels: tickerList,
+            datasets: [{
+              data: stockData
+            }]
+          },
+          options: {
+            responsive: true,
+            aspectRatio: 1.5
+          }
+        });
+      }
+      this.displayDonut = true;
+      
     }
 
 }
